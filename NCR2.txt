@@ -1,0 +1,75 @@
+if (hyperlink != NULL) {
+                        add_element_header(ncrElement.get(),"hlk","HLK",newRun.Id());
+                        ncrElement->setPropertyAsString("lnk",hyperlink);
+
+                        msgAutoPtr tmpNcrElement(QOMSG::Alloc());
+                        add_element_header(tmpNcrElement.get(),"ncr","CHA",newRun.Id());
+                        add_run_info(tmpNcrElement.get(),
+                                     iter->text.c_str(),
+                                     font_name.c_str(),
+                                     size,
+                                     color_str,
+                                     highlight_str,
+                                     bold,
+                                     italic,
+                                     underline,
+                                     strikethrough,
+                                     hidden,
+                                     subscript,
+                                     superscript,
+                                     isPageField,
+                                     allCaps,
+                                     smallCaps);
+
+                        add_element_array_object(ncrElement.get(), tmpNcrElement.get());
+                      } else if (bookMarks.size()) {
+
+                        for (int i = 0; i < bookMarks.size(); i++) {
+                          msgAutoPtr bookmarkElement(QOMSG::Alloc());
+                          std::string id_str = IdStringUtils::CreateIdString("BMK", i);
+                          add_element_header(bookmarkElement.get(),"bmk",id_str.c_str(),newRun.Id());
+                          add_character_run_ID(bookmarkElement.get(),newRun.Id());
+                          bookmarkElement->setPropertyAsString("bmkName",bookMarks[i].c_str());
+                          add_element_array_object(paragraphElement, bookmarkElement.get());
+                        }
+
+                        add_element_header(ncrElement.get(),"ncr","CHA",newRun.Id());
+                        add_run_info(ncrElement.get(),
+                                     iter->text.c_str(),
+                                     font_name.c_str(),
+                                     size,
+                                     color_str,
+                                     highlight_str,
+                                     bold,
+                                     italic,
+                                     underline,
+                                     strikethrough,
+                                     hidden,
+                                     subscript,
+                                     superscript,
+                                     isPageField,
+                                     allCaps,
+                                     smallCaps);
+
+                      } else {
+                        add_element_header(ncrElement.get(),"ncr","CHA",newRun.Id());
+                        add_run_info(ncrElement.get(),
+                                     iter->text.c_str(),
+                                     font_name.c_str(),
+                                     size,
+                                     color_str,
+                                     highlight_str,
+                                     bold,
+                                     italic,
+                                     underline,
+                                     strikethrough,
+                                     hidden,
+                                     subscript,
+                                     superscript,
+                                     isPageField,
+                                     allCaps,
+                                     smallCaps);
+                    }
+                  }
+                    add_element_array_object(paragraphElement, ncrElement.get());
+                }
